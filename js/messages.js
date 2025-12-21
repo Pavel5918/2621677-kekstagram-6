@@ -10,23 +10,27 @@ const showSuccessMessage = () => {
 
   const successButton = successElement.querySelector('.success__button');
 
-  const removeSuccessMessage = () => {
-    successElement.remove();
-    document.removeEventListener('keydown', onEscKeyDown);
-    document.removeEventListener('click', onOutsideClick);
-  };
+  let onEscKeyDown;
+  let onOutsideClick;
+  let removeSuccessMessage;
 
-  const onEscKeyDown = (evt) => {
+  onEscKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       removeSuccessMessage();
     }
   };
 
-  const onOutsideClick = (evt) => {
+  onOutsideClick = (evt) => {
     if (!successElement.contains(evt.target)) {
       removeSuccessMessage();
     }
+  };
+
+  removeSuccessMessage = () => {
+    successElement.remove();
+    document.removeEventListener('keydown', onEscKeyDown);
+    document.removeEventListener('click', onOutsideClick);
   };
 
   successButton.addEventListener('click', removeSuccessMessage);
@@ -45,23 +49,27 @@ const showErrorMessage = () => {
 
   const errorButton = errorElement.querySelector('.error__button');
 
-  const removeErrorMessage = () => {
-    errorElement.remove();
-    document.removeEventListener('keydown', onEscKeyDown);
-    document.removeEventListener('click', onOutsideClick);
-  };
+  let onEscKeyDown;
+  let onOutsideClick;
+  let removeErrorMessage;
 
-  const onEscKeyDown = (evt) => {
+  onEscKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       removeErrorMessage();
     }
   };
 
-  const onOutsideClick = (evt) => {
+  onOutsideClick = (evt) => {
     if (!errorElement.contains(evt.target)) {
       removeErrorMessage();
     }
+  };
+
+  removeErrorMessage = () => {
+    errorElement.remove();
+    document.removeEventListener('keydown', onEscKeyDown);
+    document.removeEventListener('click', onOutsideClick);
   };
 
   errorButton.addEventListener('click', removeErrorMessage);
