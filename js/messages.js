@@ -10,27 +10,23 @@ const showSuccessMessage = () => {
 
   const successButton = successElement.querySelector('.success__button');
 
-  const onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      successElement.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-      document.removeEventListener('click', onOutsideClick);
-    }
-  };
-
-  const onOutsideClick = (evt) => {
-    if (!successElement.contains(evt.target)) {
-      successElement.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-      document.removeEventListener('click', onOutsideClick);
-    }
-  };
-
   const removeSuccessMessage = () => {
     successElement.remove();
     document.removeEventListener('keydown', onEscKeyDown);
     document.removeEventListener('click', onOutsideClick);
+  };
+
+  const onOutsideClick = (evt) => {
+    if (!successElement.contains(evt.target)) {
+      removeSuccessMessage();
+    }
+  };
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      removeSuccessMessage();
+    }
   };
 
   successButton.addEventListener('click', removeSuccessMessage);
@@ -49,27 +45,23 @@ const showErrorMessage = () => {
 
   const errorButton = errorElement.querySelector('.error__button');
 
-  const onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      errorElement.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-      document.removeEventListener('click', onOutsideClick);
-    }
-  };
-
-  const onOutsideClick = (evt) => {
-    if (!errorElement.contains(evt.target)) {
-      errorElement.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-      document.removeEventListener('click', onOutsideClick);
-    }
-  };
-
   const removeErrorMessage = () => {
     errorElement.remove();
     document.removeEventListener('keydown', onEscKeyDown);
     document.removeEventListener('click', onOutsideClick);
+  };
+
+  const onOutsideClick = (evt) => {
+    if (!errorElement.contains(evt.target)) {
+      removeErrorMessage();
+    }
+  };
+
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      removeErrorMessage();
+    }
   };
 
   errorButton.addEventListener('click', removeErrorMessage);
