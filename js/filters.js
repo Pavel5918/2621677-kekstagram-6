@@ -8,9 +8,6 @@ const FilterType = {
 };
 
 const RANDOM_PHOTOS_COUNT = 10;
-
-let currentFilter = FilterType.DEFAULT;
-
 let photos = [];
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -33,8 +30,6 @@ const getDiscussedPhotos = () => {
 };
 
 const applyFilter = (filterType) => {
-  currentFilter = filterType;
-
   let filteredPhotos;
 
   switch (filterType) {
