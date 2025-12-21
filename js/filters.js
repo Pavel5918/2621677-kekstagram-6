@@ -8,6 +8,7 @@ const FilterType = {
 };
 
 const RANDOM_PHOTOS_COUNT = 10;
+
 let photos = [];
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -25,9 +26,7 @@ const getRandomPhotos = () => {
   return shuffled.slice(0, RANDOM_PHOTOS_COUNT);
 };
 
-const getDiscussedPhotos = () => {
-  return photos.slice().sort((a, b) => b.comments.length - a.comments.length);
-};
+const getDiscussedPhotos = () => photos.slice().sort((a, b) => b.comments.length - a.comments.length);
 
 const applyFilter = (filterType) => {
   let filteredPhotos;
