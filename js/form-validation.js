@@ -1,3 +1,4 @@
+
 const Pristine = window.Pristine;
 import { initEditor, resetEditor } from './editor.js';
 import { sendData } from './api.js';
@@ -9,6 +10,29 @@ const commentInput = document.querySelector('.text__description');
 const fileInput = document.querySelector('.img-upload__input');
 const overlay = document.querySelector('.img-upload__overlay');
 const cancelButton = document.querySelector('.img-upload__cancel');
+const submitButton = document.querySelector('.img-upload__submit');
+
+const uploadMessageTemplate = document.querySelector('#messages');
+
+const showUploadMessage = () => {
+  if (uploadMessageTemplate) {
+    const uploadMessageElement = uploadMessageTemplate.content.cloneNode(true);
+    const messageDiv = uploadMessageElement.querySelector('.img-upload__message');
+    messageDiv.style.position = 'fixed';
+    messageDiv.style.top = '50%';
+    messageDiv.style.left = '50%';
+    messageDiv.style.transform = 'translate(-50%, -50%)';
+    messageDiv.style.zIndex = '1001';
+    document.body.appendChild(messageDiv);
+  }
+};
+
+const hideUploadMessage = () => {
+  const message = document.querySelector('.img-upload__message');
+  if (message) {
+    message.remove();
+  }
+};
 
 const validateHashtags = (value) => {
   if (value.trim() === '') {
@@ -74,44 +98,10 @@ pristine.addValidator(
   'Комментарий не может быть длиннее 140 символов.'
 );
 
-form.addEventListener('submit', async (evt) => {
-  evt.preventDefault(); // Отменяем стандартную отправку (пункт 3.1)
-
-  // Проверяем валидность формы
-  const isValid = pristine.validate();
-
-  if (!isValid) {
-    return; // Не отправляем, если есть ошибки
-  }
-
-  // Блокируем кнопку отправки (пункт 3.1)
-  const submitButton = form.querySelector('.img-upload__submit');
-  submitButton.disabled = true;
-  submitButton.textContent = 'Отправляю...';
-
-  try {
-    // Создаем FormData из формы
-    const formData = new FormData(form);
-
-    // Отправляем данные на сервер (пункт 3.1)
-    await sendData(formData);
-
-    // УСПЕШНАЯ отправка (пункт 3.3 и 3.4)
-    showSuccessMessage(); // Показываем сообщение об успехе
-    closeForm(); // Закрываем форму
-    resetForm(); // Сбрасываем форму в исходное состояние
-
-  } catch (error) {
-    // ОШИБКА отправки (пункт 3.5)
-    showErrorMessage(); // Показываем сообщение об ошибке
-    // Данные в форме сохраняются автоматически
-
-  } finally {
-    // Разблокируем кнопку в любом случае
-    submitButton.disabled = false;
-    submitButton.textContent = 'Опубликовать';
-  }
-});
+const toggleSubmitButton = (disabled) => {
+  submitButton.disabled = disabled;
+  submitButton.textContent = disabled ? 'Отправка...' : 'Опубликовать';
+};
 
 const resetForm = () => {
   form.reset();
@@ -123,6 +113,37 @@ const closeForm = () => {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetForm();
+};
+
+const onFormSubmit = async (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+
+  if (!isValid) {
+    return;
+  }
+
+  toggleSubmitButton(true);
+  showUploadMessage();
+
+  try {
+    const formData = new FormData(form);
+
+    await sendData(formData);
+
+    hideUploadMessage();
+    showSuccessMessage();
+    closeForm();
+    resetForm();
+
+  } catch (error) {
+    hideUploadMessage();
+    showErrorMessage();
+
+  } finally {
+    toggleSubmitButton(false);
+  }
 };
 
 fileInput.addEventListener('change', () => {
@@ -158,4 +179,4 @@ commentInput.addEventListener('keydown', (evt) => {
   }
 });
 
-export { resetForm, closeForm };
+form.addEventListener('submit', onFormSubmit);

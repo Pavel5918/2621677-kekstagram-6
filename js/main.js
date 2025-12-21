@@ -1,3 +1,4 @@
+
 import { getData } from './api.js';
 import { renderThumbnails } from './thumbnails.js';
 import './form-validation.js';
@@ -35,7 +36,6 @@ const createErrorBlock = () => {
 
   document.body.appendChild(errorBlock);
 
-  // Закрытие по клику на кнопку
   errorBlock.querySelector('.error-close').addEventListener('click', () => {
     errorBlock.style.display = 'none';
   });
@@ -43,19 +43,14 @@ const createErrorBlock = () => {
   return errorBlock;
 };
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   const errorBlock = createErrorBlock();
 
-  // Загружаем данные с сервера (пункт 4.1)
   getData()
     .then((photos) => {
-      // Успешно загрузили - отображаем фотографии
       renderThumbnails(photos);
     })
-    .catch((error) => {
-      // Произошла ошибка - показываем сообщение (пункт 4.2)
-      console.error('Ошибка загрузки:', error);
+    .catch(() => {
       errorBlock.style.display = 'block';
     });
 });
