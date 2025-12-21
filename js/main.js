@@ -1,6 +1,7 @@
 
 import { getData } from './api.js';
 import { renderThumbnails } from './thumbnails.js';
+import { initFilters } from './filters.js';
 import './form-validation.js';
 
 const createErrorBlock = () => {
@@ -49,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
   getData()
     .then((photos) => {
       renderThumbnails(photos);
+
+      initFilters(photos);
     })
     .catch(() => {
       errorBlock.style.display = 'block';

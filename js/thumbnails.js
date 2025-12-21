@@ -1,3 +1,4 @@
+
 import { openFullscreen } from './fullscreen.js';
 
 const pictureTemplate = document.querySelector('#picture');
@@ -15,7 +16,6 @@ const createThumbnail = (pictureData) => {
   likesElement.textContent = pictureData.likes;
   commentsElement.textContent = pictureData.comments.length;
 
-  // Добавляем обработчик клика для открытия полноразмерного фото
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
     openFullscreen(pictureData);
@@ -35,4 +35,9 @@ const renderThumbnails = (pictures) => {
   picturesContainer.appendChild(fragment);
 };
 
-export { renderThumbnails };
+const clearThumbnails = () => {
+  const currentPictures = picturesContainer.querySelectorAll('.picture');
+  currentPictures.forEach((picture) => picture.remove());
+};
+
+export { renderThumbnails, clearThumbnails };
