@@ -193,6 +193,38 @@ const resetEffects = () => {
   }
 };
 
+const onFileInputChange = () => {
+  const fileInput = document.querySelector('#upload-file');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    alert('Пожалуйста, выберите файл изображения (JPEG, PNG, GIF)');
+    fileInput.value = '';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.addEventListener('load', () => {
+    imagePreview.src = reader.result;
+
+    document.querySelectorAll('.effects__preview').forEach((preview) => {
+      preview.style.backgroundImage = `url(${reader.result})`;
+    });
+  });
+
+  reader.addEventListener('error', () => {
+    alert('Ошибка при загрузке файла');
+    fileInput.value = '';
+  });
+
+  reader.readAsDataURL(file);
+};
+
 const initEditor = () => {
   setScale(DEFAULT_SCALE);
 
@@ -203,11 +235,23 @@ const initEditor = () => {
 
   effectLevelContainer.classList.add('hidden');
   resetEffects();
+
+  const fileInput = document.querySelector('#upload-file');
+  fileInput.addEventListener('change', onFileInputChange);
 };
 
 const resetEditor = () => {
   setScale(DEFAULT_SCALE);
   resetEffects();
+
+  imagePreview.src = 'img/upload-default-image.jpg';
+
+  document.querySelectorAll('.effects__preview').forEach((preview) => {
+    preview.style.backgroundImage = '';
+  });
+
+  const fileInput = document.querySelector('#upload-file');
+  fileInput.value = '';
 };
 
 export { initEditor, resetEditor };
