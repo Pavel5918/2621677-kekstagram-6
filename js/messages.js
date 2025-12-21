@@ -10,7 +10,8 @@ const showSuccessMessage = () => {
 
   const successButton = successElement.querySelector('.success__button');
 
-  const removeEventListeners = () => {
+  const removeSuccessMessage = () => {
+    successElement.remove();
     document.removeEventListener('keydown', handleEscKey);
     document.removeEventListener('click', handleOutsideClick);
   };
@@ -18,21 +19,14 @@ const showSuccessMessage = () => {
   const handleEscKey = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      removeEventListeners();
-      successElement.remove();
+      removeSuccessMessage();
     }
   };
 
   const handleOutsideClick = (evt) => {
     if (!successElement.contains(evt.target)) {
-      removeEventListeners();
-      successElement.remove();
+      removeSuccessMessage();
     }
-  };
-
-  const removeSuccessMessage = () => {
-    removeEventListeners();
-    successElement.remove();
   };
 
   successButton.addEventListener('click', removeSuccessMessage);
@@ -51,7 +45,8 @@ const showErrorMessage = () => {
 
   const errorButton = errorElement.querySelector('.error__button');
 
-  const removeEventListeners = () => {
+  const removeErrorMessage = () => {
+    errorElement.remove();
     document.removeEventListener('keydown', handleEscKey);
     document.removeEventListener('click', handleOutsideClick);
   };
@@ -59,21 +54,14 @@ const showErrorMessage = () => {
   const handleEscKey = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      removeEventListeners();
-      errorElement.remove();
+      removeErrorMessage();
     }
   };
 
   const handleOutsideClick = (evt) => {
     if (!errorElement.contains(evt.target)) {
-      removeEventListeners();
-      errorElement.remove();
+      removeErrorMessage();
     }
-  };
-
-  const removeErrorMessage = () => {
-    removeEventListeners();
-    errorElement.remove();
   };
 
   errorButton.addEventListener('click', removeErrorMessage);
