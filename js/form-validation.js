@@ -119,17 +119,17 @@ const resetForm = () => {
   resetEditor();
 };
 
-fileInput.addEventListener('change', () => {
-  overlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  initEditor();
-});
-
 const closeForm = () => {
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetForm();
 };
+
+fileInput.addEventListener('change', () => {
+  overlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  initEditor();
+});
 
 cancelButton.addEventListener('click', () => {
   closeForm();

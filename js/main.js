@@ -1,6 +1,5 @@
 import { getData } from './api.js';
 import { renderThumbnails } from './thumbnails.js';
-import { showErrorMessage } from './messages.js';
 import './form-validation.js';
 
 const createErrorBlock = () => {

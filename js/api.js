@@ -20,25 +20,20 @@ const ErrorText = {
 };
 
 // Основная функция для работы с fetch
-const load = (route, errorText, method = Method.GET, body = null) => {
-  // Выполняем запрос к серверу
-  return fetch(`${BASE_URL}${route}`, {
+const load = (route, errorText, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {
     method: method,
     body: body
   })
     .then((response) => {
-      // Проверяем, успешен ли ответ
       if (!response.ok) {
-        throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
+        throw new Error();
       }
-      // Преобразуем ответ в JSON
       return response.json();
     })
     .catch(() => {
-      // Если произошла ошибка - выбрасываем её с понятным текстом
       throw new Error(errorText);
     });
-};
 
 // Функция для получения фотографий с сервера
 const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA, Method.GET);

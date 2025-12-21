@@ -13,9 +13,6 @@ const NAMES = [
   'Михаил', 'Виктория', 'Андрей', 'Юлия', 'Павел'
 ];
 
-const getPhotos = () => {
-  console.log('getPhotos() вызвана, но данные теперь с сервера');
-  return [];
-};
+const getPhotos = () => [];
 
 export { MESSAGES, NAMES, getPhotos };
