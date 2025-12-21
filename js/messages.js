@@ -10,24 +10,24 @@ const showSuccessMessage = () => {
 
   const successButton = successElement.querySelector('.success__button');
 
-  let onEscKeyDown;
-  let onOutsideClick;
-  let removeSuccessMessage;
-
-  onEscKeyDown = (evt) => {
+  const onEscKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      removeSuccessMessage();
+      successElement.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+      document.removeEventListener('click', onOutsideClick);
     }
   };
 
-  onOutsideClick = (evt) => {
+  const onOutsideClick = (evt) => {
     if (!successElement.contains(evt.target)) {
-      removeSuccessMessage();
+      successElement.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+      document.removeEventListener('click', onOutsideClick);
     }
   };
 
-  removeSuccessMessage = () => {
+  const removeSuccessMessage = () => {
     successElement.remove();
     document.removeEventListener('keydown', onEscKeyDown);
     document.removeEventListener('click', onOutsideClick);
@@ -49,24 +49,24 @@ const showErrorMessage = () => {
 
   const errorButton = errorElement.querySelector('.error__button');
 
-  let onEscKeyDown;
-  let onOutsideClick;
-  let removeErrorMessage;
-
-  onEscKeyDown = (evt) => {
+  const onEscKeyDown = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      removeErrorMessage();
+      errorElement.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+      document.removeEventListener('click', onOutsideClick);
     }
   };
 
-  onOutsideClick = (evt) => {
+  const onOutsideClick = (evt) => {
     if (!errorElement.contains(evt.target)) {
-      removeErrorMessage();
+      errorElement.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+      document.removeEventListener('click', onOutsideClick);
     }
   };
 
-  removeErrorMessage = () => {
+  const removeErrorMessage = () => {
     errorElement.remove();
     document.removeEventListener('keydown', onEscKeyDown);
     document.removeEventListener('click', onOutsideClick);
