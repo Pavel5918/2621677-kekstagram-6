@@ -202,10 +202,9 @@ const onFileInputChange = () => {
   }
 
   if (!file.type.startsWith('image/')) {
-  console.error('Пожалуйста, выберите файл изображения (JPEG, PNG, GIF)');
-  fileInput.value = '';
-  return;
-}
+    fileInput.value = '';
+    return;
+  }
 
   const reader = new FileReader();
 
@@ -218,8 +217,7 @@ const onFileInputChange = () => {
   });
 
   reader.addEventListener('error', () => {
-  console.error('Ошибка при загрузке файла');
-  fileInput.value = '';
+    fileInput.value = '';
   });
 
   reader.readAsDataURL(file);
